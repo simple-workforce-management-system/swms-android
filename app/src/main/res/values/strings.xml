@@ -96,6 +96,7 @@
     <string name="startup_client_button">Clients</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
     <string name="client_detail_save_button_text">Save</string>
+    <string name="title_activity_client_add">ClientAddActivity</string>
 
 
 </resources>

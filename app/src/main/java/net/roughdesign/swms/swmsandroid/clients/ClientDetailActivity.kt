@@ -3,10 +3,7 @@ package net.roughdesign.swms.swmsandroid.clients
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable
 
 import kotlinx.android.synthetic.main.client_detail_activity.*
 import kotlinx.android.synthetic.main.client_detail_content.*
@@ -37,11 +34,11 @@ class ClientDetailActivity : AppCompatActivity() {
 
         val client : Client = intent.getSerializableExtra(clientExtraId) as Client
 
-        client_detail_name.text.clear()
-        client_detail_name.text.append(client.name)
+        client_add_name.text.clear()
+        client_add_name.text.append(client.name)
 
-        client_detail_contact.text.clear()
-        client_detail_contact.text.append(client.contactData)
+        client_add_contact.text.clear()
+        client_add_contact.text.append(client.contactData)
     }
 
 }

@@ -11,7 +11,7 @@
         tools:showIn="@layout/client_detail_activity">
 
     <EditText
-            android:id="@+id/client_detail_name"
+            android:id="@+id/client_add_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="56dp"
@@ -20,7 +20,7 @@
             android:text="Name" />
 
     <EditText
-            android:id="@+id/client_detail_contact"
+            android:id="@+id/client_add_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
