@@ -33,7 +33,7 @@ class ClientListActivity : AppCompatActivity() {
 
         val clientList = arrayListOf<Client>()
 
-        viewAdapter = ClientListRecyclerAdapter(clientList)
+        viewAdapter = ClientListRecyclerAdapter(this, clientList)
         viewManager = LinearLayoutManager(this)
 
         recyclerView = findViewById<RecyclerView>(R.id.client_list_list).apply {

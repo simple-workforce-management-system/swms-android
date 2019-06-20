@@ -1,5 +1,6 @@
 package net.roughdesign.swms.swmsandroid.clients
 
+import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -8,7 +9,7 @@ import android.widget.TextView
 import net.roughdesign.swms.swmsandroid.R
 import net.roughdesign.swms.swmsandroid.clients.models.Client
 
-class ClientListRecyclerAdapter(private val clients: List<Client>) :
+class ClientListRecyclerAdapter(val context: Context, private val clients: List<Client>) :
     RecyclerView.Adapter<ClientListRecyclerAdapter.ViewHolder>() {
 
     class ViewHolder(val constraintLayout: ConstraintLayout) : RecyclerView.ViewHolder(constraintLayout)
@@ -26,10 +27,16 @@ class ClientListRecyclerAdapter(private val clients: List<Client>) :
 
         val client = clients[position]
         val constraintLayout = holder.constraintLayout
-        val textView1 = constraintLayout.getViewById(R.id.client_list_row_title) as TextView
-        textView1.text = client.name
+        val title = constraintLayout.getViewById(R.id.client_list_row_title) as TextView
+        title.text = client.name
+
+        constraintLayout.setOnClickListener {
+            ClientDetailActivity.start(context, client)
+        }
+
     }
 
     override fun getItemCount() = clients.size
+
 
 }

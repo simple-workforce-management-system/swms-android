@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import kotlinx.android.synthetic.main.dashboard_activty.*
 import kotlinx.android.synthetic.main.dashboard_content.*
+import net.roughdesign.swms.swmsandroid.clients.ClientDetailActivity
 import net.roughdesign.swms.swmsandroid.clients.ClientListActivity
 
 class DashboardActivity : AppCompatActivity() {
