@@ -14,10 +14,6 @@ class ClientDetailActivity : AppCompatActivity() {
         setContentView(R.layout.client_detail_activity)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

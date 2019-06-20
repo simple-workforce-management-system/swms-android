@@ -1,10 +1,13 @@
 package net.roughdesign.swms.swmsandroid
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 
 import kotlinx.android.synthetic.main.dashboard_activty.*
+import kotlinx.android.synthetic.main.dashboard_content.*
+import net.roughdesign.swms.swmsandroid.clients.ClientListActivity
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -13,10 +16,11 @@ class DashboardActivity : AppCompatActivity() {
         setContentView(R.layout.dashboard_activty)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        dashboard_clients_button.setOnClickListener {
+            val intent = Intent(this, ClientListActivity::class.java)
+            startActivity(intent)
         }
+
     }
 
 }
