@@ -1,27 +1,32 @@
 package net.roughdesign.swms.swmsandroid.clients
 
 import android.os.Bundle
-import android.os.Debug
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.client_list_activity.*
 import net.roughdesign.swms.swmsandroid.R
 import net.roughdesign.swms.swmsandroid.clients.models.Client
-import net.roughdesign.swms.swmsandroid.clients.models.ClientList
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import net.roughdesign.swms.swmsandroid.web.JsonRepository
+import net.roughdesign.swms.swmsandroid.web.ResponseReacter
+import net.roughdesign.swms.swmsandroid.web.urlsets.UrlSet
 import java.net.URL
 
 class ClientListActivity : AppCompatActivity() {
 
+    private val clientList = arrayListOf<Client>()
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+
+    private lateinit var repository: JsonRepository<Client>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,14 +37,18 @@ class ClientListActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            ClientAddActivity.start(this)
         }
 
+        setUpListView()
+        repository = Client.createRepository(this)
 
 
-        val clientList = arrayListOf<Client>()
+        requestClientListUpdate()
+    }
 
+
+    private fun setUpListView() {
         viewAdapter = ClientListRecyclerAdapter(this, clientList)
         viewManager = LinearLayoutManager(this)
 
@@ -47,25 +56,29 @@ class ClientListActivity : AppCompatActivity() {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
-
         }
+    }
 
-        doAsync {
-            val textResponse = URL("http://swmsapi.azurewebsites.net/clients").readText()
 
-            val typeToken = object : TypeToken<List<Client>>() {}.type
-            val clients = Gson().fromJson<ArrayList<Client>>(textResponse, typeToken)
+    private fun requestClientListUpdate() {
+        repository.index(object : ResponseReacter() {
 
-            uiThread {
+            override fun onResponse(response: ByteArray) {
 
-                Log.w("ClientListActivity", "Count: " + clients.count())
+                val bytesAsString = String(response)
+                val typeToken = object : TypeToken<ArrayList<Client>>() {}.type
+                val clients = Gson().fromJson<ArrayList<Client>>(bytesAsString, typeToken)
+
                 clientList.clear()
                 clientList.addAll(clients)
                 viewAdapter.notifyDataSetChanged()
             }
 
+            override fun onErrorResponse(error: VolleyError) {
 
-        }
+                TODO("not implemented")
+            }
 
+        })
     }
 }

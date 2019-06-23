@@ -1,67 +1,72 @@
 package net.roughdesign.swms.swmsandroid.web
 
-import com.android.volley.Request
+import android.util.Log
+import com.android.volley.NetworkResponse
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.HttpHeaderParser
+import com.android.volley.toolbox.JsonRequest
 import com.google.gson.Gson
-import java.net.URL
+import net.roughdesign.swms.swmsandroid.web.urlsets.ApiAccess
+import net.roughdesign.swms.swmsandroid.web.urlsets.UrlSet
 
 class JsonRepository<T>(
-    private val jsonRequestFactory: JsonRequestFactory,
-    private val urlSet: UrlSet
+    private val urlSet: UrlSet,
+    private val requestQueue: RequestQueue
 ) {
 
 
-    fun create(model: T, responseReacter: ResponseReacter<T>) {
+    fun create(model: T, responseReacter: ResponseReacter) {
         val apiAccess = urlSet.create
         val requestBody = Gson().toJson(model)
-        jsonRequestFactory.sendRequest(apiAccess, requestBody, responseReacter)
+        sendRequest(apiAccess, requestBody, responseReacter)
     }
 
-    fun update(model: T, responseReacter: ResponseReacter<T>) {
+    fun update(model: T, responseReacter: ResponseReacter) {
         val apiAccess = urlSet.update
         val requestBody = Gson().toJson(model)
-        jsonRequestFactory.sendRequest(apiAccess, requestBody, responseReacter)
+        sendRequest(apiAccess, requestBody, responseReacter)
     }
 
-    fun delete(model: T, responseReacter: ResponseReacter<Boolean>) {
+    fun delete(model: T, responseReacter: ResponseReacter) {
         val apiAccess = urlSet.delete
         val requestBody = Gson().toJson(model)
-        jsonRequestFactory.sendRequest(apiAccess, requestBody, responseReacter)
+        sendRequest(apiAccess, requestBody, responseReacter)
     }
 
-    fun index(responseReacter: ResponseReacter<List<T>>) {
+    fun index(responseReacter: ResponseReacter) {
         val apiAccess = urlSet.index
-        jsonRequestFactory.sendRequest(apiAccess, null, responseReacter)
+        sendRequest(apiAccess, null, responseReacter)
     }
 
-    fun get(id: Long, responseReacter: ResponseReacter<T>) {
+    fun get(id: Long, responseReacter: ResponseReacter) {
         val apiAccessWithParameter = urlSet.get
         val apiAccessWithId = apiAccessWithParameter.getFullUrl(id.toString())
-        jsonRequestFactory.sendRequest(apiAccessWithId, null, responseReacter)
+        sendRequest(apiAccessWithId, null, responseReacter)
     }
-}
 
-fun createDefaultUrlSet(baseUrl: URL): UrlSet {
-    val create = ApiAccess(Request.Method.POST, baseUrl)
-    val update = ApiAccess(Request.Method.PUT, baseUrl)
-    val delete = ApiAccess(Request.Method.DELETE, baseUrl)
-    val index = ApiAccess(Request.Method.GET, baseUrl)
-    val get = ApiAccessWithParameter(Request.Method.GET, baseUrl)
-    return UrlSet(create, update, delete, index, get)
-}
 
-data class UrlSet(
-    val create: ApiAccess,
-    val update: ApiAccess,
-    val delete: ApiAccess,
-    val index: ApiAccess,
-    val get: ApiAccessWithParameter
-)
+    private fun sendRequest(apiAccess: ApiAccess, requestBody: String?, responseReacter: ResponseReacter) {
+        val method = apiAccess.method
+        val url = apiAccess.url
+        val urlAsString = url.toString()
 
-data class ApiAccess(val method: Int, val url: URL)
+        val listener = Response.Listener<ByteArray> { response -> responseReacter.onResponse(response) }
+        val errorListener = Response.ErrorListener { error -> responseReacter.onErrorResponse(error) }
 
-class ApiAccessWithParameter(private val method: Int, private val url: URL){
-    fun getFullUrl( parameter : String) : ApiAccess{
-        val fullUrl = URL(url, parameter)
-        return ApiAccess(method, fullUrl)
+        val request = object : JsonRequest<ByteArray>(method, urlAsString, requestBody, listener, errorListener) {
+
+            override fun parseNetworkResponse(response: NetworkResponse): Response<ByteArray> {
+                val dataAsBytes: ByteArray = response.data
+                val cacheEntry = HttpHeaderParser.parseCacheHeaders(response)
+                return Response.success(dataAsBytes, cacheEntry)
+            }
+        }
+
+        requestQueue.add(request)
     }
+
 }
+
+
+
