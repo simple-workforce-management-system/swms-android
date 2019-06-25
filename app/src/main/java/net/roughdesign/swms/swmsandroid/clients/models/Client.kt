@@ -12,7 +12,7 @@ data class Client(val id: Long, val name: String, val contactData: String) : Ser
     companion object {
         fun createRepository(context: Context): JsonRepository<Client> {
             val queue = Volley.newRequestQueue(context)
-            val urlSet = UrlSet.createDefaultUrlSet(URL("http://swmsapi.azurewebsites.net/clients"))
+            val urlSet = UrlSet.createDefaultUrlSet(URL("http://swmsapi.azurewebsites.net/clients/"))
             return JsonRepository(urlSet, queue)
         }
     }

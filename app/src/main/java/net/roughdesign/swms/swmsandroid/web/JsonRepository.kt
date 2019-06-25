@@ -2,13 +2,18 @@ package net.roughdesign.swms.swmsandroid.web
 
 import android.util.Log
 import com.android.volley.NetworkResponse
+import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.HttpHeaderParser
 import com.android.volley.toolbox.JsonRequest
 import com.google.gson.Gson
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
 import net.roughdesign.swms.swmsandroid.web.urlsets.ApiAccess
 import net.roughdesign.swms.swmsandroid.web.urlsets.UrlSet
+import java.net.URL
+import java.util.*
 
 class JsonRepository<T>(
     private val urlSet: UrlSet,
@@ -28,10 +33,10 @@ class JsonRepository<T>(
         sendRequest(apiAccess, requestBody, responseReacter)
     }
 
-    fun delete(model: T, responseReacter: ResponseReacter) {
+    fun delete(id: Long, responseReacter: ResponseReacter) {
         val apiAccess = urlSet.delete
-        val requestBody = Gson().toJson(model)
-        sendRequest(apiAccess, requestBody, responseReacter)
+        val apiAccessWithParameter = apiAccess.getFullUrl(id.toString())
+        sendRequest(apiAccessWithParameter, null, responseReacter)
     }
 
     fun index(responseReacter: ResponseReacter) {
@@ -47,25 +52,11 @@ class JsonRepository<T>(
 
 
     private fun sendRequest(apiAccess: ApiAccess, requestBody: String?, responseReacter: ResponseReacter) {
-        val method = apiAccess.method
-        val url = apiAccess.url
-        val urlAsString = url.toString()
 
-        val listener = Response.Listener<ByteArray> { response -> responseReacter.onResponse(response) }
-        val errorListener = Response.ErrorListener { error -> responseReacter.onErrorResponse(error) }
-
-        val request = object : JsonRequest<ByteArray>(method, urlAsString, requestBody, listener, errorListener) {
-
-            override fun parseNetworkResponse(response: NetworkResponse): Response<ByteArray> {
-                val dataAsBytes: ByteArray = response.data
-                val cacheEntry = HttpHeaderParser.parseCacheHeaders(response)
-                return Response.success(dataAsBytes, cacheEntry)
-            }
-        }
-
+        Log.i(JsonRepository::class.java.simpleName, "Requesting " + apiAccess.url)
+        val request = JsonObjectRequest(apiAccess, requestBody, responseReacter)
         requestQueue.add(request)
     }
-
 }
 
 
