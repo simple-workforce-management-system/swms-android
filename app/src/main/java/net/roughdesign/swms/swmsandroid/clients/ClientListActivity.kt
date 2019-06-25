@@ -45,7 +45,7 @@ class ClientListActivity : AppCompatActivity() {
 
 
         setUpListView()
-        repository = Client.createRepository(this)
+        repository = Client.getRepository(this)
     }
 
 

@@ -3,23 +3,18 @@ package net.roughdesign.swms.swmsandroid.clients
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.ResultReceiver
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.EditText
 import com.android.volley.VolleyError
 import net.roughdesign.swms.swmsandroid.R
 
-import kotlinx.android.synthetic.main.client_add_activity.*
 import kotlinx.android.synthetic.main.client_add_content.*
 import net.roughdesign.swms.swmsandroid.clients.models.Client
 import net.roughdesign.swms.swmsandroid.web.JsonRepository
 import net.roughdesign.swms.swmsandroid.web.ResponseReacter
-import org.jetbrains.anko.contentView
-import java.net.URL
 
 class ClientAddActivity : AppCompatActivity() {
 
@@ -40,7 +35,7 @@ class ClientAddActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
-        repo = Client.createRepository(this)
+        repo = Client.getRepository(this)
     }
 
 

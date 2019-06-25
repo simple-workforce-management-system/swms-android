@@ -12,7 +12,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
 import com.android.volley.VolleyError
-import kotlinx.android.synthetic.main.client_detail_activity.*
 import kotlinx.android.synthetic.main.client_detail_content.*
 import net.roughdesign.swms.swmsandroid.R
 import net.roughdesign.swms.swmsandroid.clients.models.Client
@@ -42,7 +41,7 @@ class ClientDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
-        repository = Client.createRepository(this)
+        repository = Client.getRepository(this)
 
         client = intent.getSerializableExtra(clientExtraId) as Client
         client_add_name.text.clear()
@@ -59,8 +58,8 @@ class ClientDetailActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
