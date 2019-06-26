@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">SWMS Android</string>
+    <string name="app_name">SWMS</string>
+
+    <string name="startup__title">SWMS</string>
+
 
     <string name="dashboard_activity_title">DashboardActivity</string>
     <string name="dashboard_client_list_button">Clients</string>

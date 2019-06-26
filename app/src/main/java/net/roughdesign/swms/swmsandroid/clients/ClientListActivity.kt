@@ -39,7 +39,7 @@ class ClientListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.client_list_activity)
+        setContentView(R.layout.client_list__activity)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -52,7 +52,7 @@ class ClientListActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.client_list_menu, menu)
+        inflater.inflate(R.menu.client_list__menu, menu)
         return true
     }
 

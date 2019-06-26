@@ -7,6 +7,6 @@
         android:layout_height="match_parent"
         tools:context=".clients.ClientAddActivity">
 
-    <include layout="@layout/client_add_content" />
+    <include layout="@layout/client_add__content" />
 
 </android.support.design.widget.CoordinatorLayout>

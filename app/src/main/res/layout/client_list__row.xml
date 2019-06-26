@@ -5,7 +5,7 @@
         android:layout_height="64dp">
 
     <TextView
-            android:id="@+id/client_list_row_title"
+            android:id="@+id/row_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

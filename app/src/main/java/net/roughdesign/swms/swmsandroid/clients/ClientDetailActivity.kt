@@ -12,7 +12,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
 import com.android.volley.VolleyError
-import kotlinx.android.synthetic.main.client_detail_content.*
+import kotlinx.android.synthetic.main.client_detail__content.*
 import net.roughdesign.swms.swmsandroid.R
 import net.roughdesign.swms.swmsandroid.clients.models.Client
 import net.roughdesign.swms.swmsandroid.web.JsonRepository
@@ -37,24 +37,24 @@ class ClientDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.client_detail_activity)
+        setContentView(R.layout.client_detail__activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
         repository = Client.getRepository(this)
 
         client = intent.getSerializableExtra(clientExtraId) as Client
-        client_add_name.text.clear()
-        client_add_name.text.append(client.name)
-        client_add_contact.text.clear()
-        client_add_contact.text.append(client.contactData)
+        client_name.text.clear()
+        client_name.text.append(client.name)
+        client_contact.text.clear()
+        client_contact.text.append(client.contactData)
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.client_detail_menu, menu)
+        inflater.inflate(R.menu.client_detail__menu, menu)
         return true
     }
 
@@ -87,8 +87,8 @@ class ClientDetailActivity : AppCompatActivity() {
 
             .setPositiveButton(android.R.string.yes) { dialog, which ->
 
-                val name = client_add_name.text.toString()
-                val contactData = client_add_contact.text.toString()
+                val name = client_name.text.toString()
+                val contactData = client_contact.text.toString()
                 val updatedClient = Client(client.id, name, contactData)
 
                 repository.update(updatedClient, object : ResponseReacter() {

@@ -12,10 +12,12 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme"
+            android:theme="@style/SwmsTheme"
             tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".StartupActivity">
+        <activity
+                android:name=".StartupActivity"
+                android:theme="@style/SwmsTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

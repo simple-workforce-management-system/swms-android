@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".clients.ClientListActivity"
-        tools:showIn="@layout/client_list_activity">
+        tools:showIn="@layout/client_list__activity">
 
 
 </android.support.v7.widget.RecyclerView>

@@ -6,10 +6,10 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".clients.ClientAddActivity"
-        tools:showIn="@layout/client_add_activity">
+        tools:showIn="@layout/client_add__activity">
 
     <EditText
-            android:id="@+id/client_add_name"
+            android:id="@+id/client_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -21,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-            android:id="@+id/client_add_contact"
+            android:id="@+id/client_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -30,6 +30,6 @@
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/client_add_name" />
+            app:layout_constraintTop_toBottomOf="@+id/client_name" />
 
 </android.support.constraint.ConstraintLayout>

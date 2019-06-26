@@ -11,7 +11,7 @@ import android.view.MenuItem
 import com.android.volley.VolleyError
 import net.roughdesign.swms.swmsandroid.R
 
-import kotlinx.android.synthetic.main.client_add_content.*
+import kotlinx.android.synthetic.main.client_add__content.*
 import net.roughdesign.swms.swmsandroid.clients.models.Client
 import net.roughdesign.swms.swmsandroid.web.JsonRepository
 import net.roughdesign.swms.swmsandroid.web.ResponseReacter
@@ -31,7 +31,7 @@ class ClientAddActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.client_add_activity)
+        setContentView(R.layout.client_add__activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
@@ -42,7 +42,7 @@ class ClientAddActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.client_add_menu, menu)
+        inflater.inflate(R.menu.client_add__menu, menu)
         return true
     }
 
@@ -66,8 +66,8 @@ class ClientAddActivity : AppCompatActivity() {
 
 
     private fun openAddConfirmationDialog() {
-        val name = client_add_name.text.toString()
-        val contactData = client_add_contact.text.toString()
+        val name = client_name.text.toString()
+        val contactData = client_contact.text.toString()
 
         val client = Client(0, name, contactData)
         repo.create(client, object : ResponseReacter() {

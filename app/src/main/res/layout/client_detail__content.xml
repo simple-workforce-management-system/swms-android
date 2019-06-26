@@ -8,10 +8,10 @@
         android:padding="24dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".clients.ClientDetailActivity"
-        tools:showIn="@layout/client_detail_activity">
+        tools:showIn="@layout/client_detail__activity">
 
     <EditText
-            android:id="@+id/client_add_name"
+            android:id="@+id/client_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="56dp"
@@ -20,7 +20,7 @@
             android:text="Name" />
 
     <EditText
-            android:id="@+id/client_add_contact"
+            android:id="@+id/client_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"

@@ -2,10 +2,11 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".clients.ClientListActivity">
+        tools:context=".clients.ClientDetailActivity">
 
-    <include layout="@layout/client_list_content" />
+    <include layout="@layout/client_detail__content" />
 
 </android.support.design.widget.CoordinatorLayout>

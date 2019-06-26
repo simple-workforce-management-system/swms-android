@@ -18,7 +18,7 @@ class ClientListRecyclerAdapter(val context: Context, private val clients: List<
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val layoutInflater = LayoutInflater.from(parent.context)
-        val constraintLayout = layoutInflater.inflate(R.layout.client_list_row, parent, false) as ConstraintLayout
+        val constraintLayout = layoutInflater.inflate(R.layout.client_list__row, parent, false) as ConstraintLayout
         return ViewHolder(constraintLayout)
     }
 
@@ -27,7 +27,7 @@ class ClientListRecyclerAdapter(val context: Context, private val clients: List<
 
         val client = clients[position]
         val constraintLayout = holder.constraintLayout
-        val title = constraintLayout.getViewById(R.id.client_list_row_title) as TextView
+        val title = constraintLayout.getViewById(R.id.row_title) as TextView
         title.text = client.name
 
         constraintLayout.setOnClickListener {
