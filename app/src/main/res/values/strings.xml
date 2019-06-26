@@ -4,18 +4,18 @@
     <string name="startup__title">SWMS</string>
 
 
-    <string name="dashboard_activity_title">DashboardActivity</string>
+    <string name="dashboard_activity_title">Dashboard</string>
     <string name="dashboard_client_list_button">Clients</string>
 
 
-    <string name="client_list_activity_title">ClientListActivity</string>
+    <string name="client_list_activity_title">Clients</string>
     <string name="client_list_menu_add">Add Client</string>
 
-    <string name="client_detail_activity_title">ClientDetailActivity</string>
+    <string name="client_detail_activity_title">Client</string>
     <string name="client_detail_save_button_text">Save</string>
     <string name="client_detail_delete_button_text">Delete</string>
 
-    <string name="client_add_activity_title">ClientAddActivity</string>
+    <string name="client_add_activity_title">Add Client</string>
 
 
 </resources>

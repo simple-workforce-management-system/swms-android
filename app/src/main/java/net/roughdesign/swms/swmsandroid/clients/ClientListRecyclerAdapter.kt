@@ -1,5 +1,6 @@
 package net.roughdesign.swms.swmsandroid.clients
 
+import android.app.Activity
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
@@ -9,7 +10,7 @@ import android.widget.TextView
 import net.roughdesign.swms.swmsandroid.R
 import net.roughdesign.swms.swmsandroid.clients.models.Client
 
-class ClientListRecyclerAdapter(val context: Context, private val clients: List<Client>) :
+class ClientListRecyclerAdapter(val activity : Activity, private val clients: List<Client>) :
     RecyclerView.Adapter<ClientListRecyclerAdapter.ViewHolder>() {
 
     class ViewHolder(val constraintLayout: ConstraintLayout) : RecyclerView.ViewHolder(constraintLayout)
@@ -31,7 +32,7 @@ class ClientListRecyclerAdapter(val context: Context, private val clients: List<
         title.text = client.name
 
         constraintLayout.setOnClickListener {
-            ClientDetailActivity.start(context, client)
+            ClientDetailActivity.start(activity, holder.constraintLayout, client)
         }
 
     }

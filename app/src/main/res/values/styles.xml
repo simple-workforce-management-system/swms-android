@@ -1,11 +1,15 @@
 <resources>
 
-    <style name="SwmsTheme" parent="Theme.Design">
+    <style name="SwmsBaseTheme" parent="Theme.AppCompat.Light">
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:actionMenuTextColor">@color/buttonText</item>
+
+    </style>
+
+    <style name="SwmsTheme" parent="SwmsBaseTheme">
 
     </style>
 

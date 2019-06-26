@@ -1,15 +1,18 @@
 package net.roughdesign.swms.swmsandroid.clients
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import com.android.volley.VolleyError
 import kotlinx.android.synthetic.main.client_detail__content.*
@@ -24,10 +27,16 @@ class ClientDetailActivity : AppCompatActivity() {
     companion object {
         private const val clientExtraId = "ClientDetailActivity"
 
-        fun start(context: Context, client: Client) {
-            val intent = Intent(context, ClientDetailActivity::class.java)
+        fun start(activity: Activity, sourceView: View, client: Client) {
+            val intent = Intent(activity, ClientDetailActivity::class.java)
             intent.putExtra(clientExtraId, client)
-            context.startActivity(intent)
+
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, sourceView, "client_add")
+                activity.startActivity(intent, options.toBundle())
+            } else {
+                activity.startActivity(intent)
+            }
         }
     }
 
