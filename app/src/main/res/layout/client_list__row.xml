@@ -12,8 +12,10 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:text=""
-            android:transitionName="client_add"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </android.support.constraint.ConstraintLayout>

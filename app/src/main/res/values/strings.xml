@@ -1,21 +1,29 @@
 <resources>
-    <string name="app_name">SWMS</string>
+    <string name="global__app_name">SWMS</string>
+
+    <string name="error_network__no_connection">Please check your internet connection and try again.</string>
+    <string name="error_network__timeout">Network timeout!</string>
+    <string name="error_network__auth">AUTH</string>
+    <string name="error_network__server">Error on server. Try again later.</string>
+    <string name="error_network">Network error</string>
+    <string name="error_network__parse">Parse error</string>
+
 
     <string name="startup__title">SWMS</string>
 
 
-    <string name="dashboard_activity_title">Dashboard</string>
-    <string name="dashboard_client_list_button">Clients</string>
+    <string name="dashboard__activity_title">Dashboard</string>
+    <string name="dashboard__client_list_button">Clients</string>
 
 
-    <string name="client_list_activity_title">Clients</string>
-    <string name="client_list_menu_add">Add Client</string>
+    <string name="client_list__activity_title">Clients</string>
+    <string name="client_list__menu_add">Add Client</string>
 
-    <string name="client_detail_activity_title">Client</string>
-    <string name="client_detail_save_button_text">Save</string>
-    <string name="client_detail_delete_button_text">Delete</string>
+    <string name="client_add__activity_title">Add Client</string>
 
-    <string name="client_add_activity_title">Add Client</string>
+    <string name="client_detail__activity_title">Client</string>
+    <string name="client_detail__save_button_text">Save</string>
+    <string name="client_detail__delete_button_text">Delete</string>
 
 
 </resources>

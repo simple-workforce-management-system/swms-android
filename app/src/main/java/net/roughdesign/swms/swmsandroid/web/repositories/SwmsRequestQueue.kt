@@ -1,4 +1,4 @@
-package net.roughdesign.swms.swmsandroid.web
+package net.roughdesign.swms.swmsandroid.web.repositories
 
 import android.content.Context
 import com.android.volley.RequestQueue
@@ -18,7 +18,8 @@ class SwmsRequestQueue constructor(context: Context) {
 
         private fun getInstance(context: Context) =
             INSTANCE ?: synchronized(this) {
-                INSTANCE ?: SwmsRequestQueue(context.applicationContext).also {
+                INSTANCE
+                    ?: SwmsRequestQueue(context.applicationContext).also {
                     INSTANCE = it
                 }
             }

@@ -4,17 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import com.android.volley.VolleyError
-import net.roughdesign.swms.swmsandroid.R
-
 import kotlinx.android.synthetic.main.client_add__content.*
+import net.roughdesign.swms.swmsandroid.R
 import net.roughdesign.swms.swmsandroid.clients.models.Client
-import net.roughdesign.swms.swmsandroid.web.JsonRepository
-import net.roughdesign.swms.swmsandroid.web.ResponseReacter
+import net.roughdesign.swms.swmsandroid.web.WebErrorHandler
+import net.roughdesign.swms.swmsandroid.web.repositories.JsonRepository
+import net.roughdesign.swms.swmsandroid.web.repositories.ResponseReacter
+import org.jetbrains.anko.contentView
 
 class ClientAddActivity : AppCompatActivity() {
 
@@ -82,7 +83,7 @@ class ClientAddActivity : AppCompatActivity() {
             }
 
             override fun onErrorResponse(error: VolleyError) {
-                TODO("not implemented")
+                WebErrorHandler.showFeedbackOnScreen(contentView!!, error)
             }
         })
     }

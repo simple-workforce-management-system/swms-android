@@ -1,8 +1,8 @@
 package net.roughdesign.swms.swmsandroid.clients.models
 
 import android.content.Context
-import net.roughdesign.swms.swmsandroid.web.JsonRepository
-import net.roughdesign.swms.swmsandroid.web.SwmsRequestQueue
+import net.roughdesign.swms.swmsandroid.web.repositories.JsonRepository
+import net.roughdesign.swms.swmsandroid.web.repositories.SwmsRequestQueue
 import net.roughdesign.swms.swmsandroid.web.urlsets.UrlSet
 import java.io.Serializable
 import java.net.URL

@@ -1,4 +1,4 @@
-package net.roughdesign.swms.swmsandroid.web
+package net.roughdesign.swms.swmsandroid.web.repositories
 
 import com.android.volley.AuthFailureError
 import com.android.volley.NetworkResponse

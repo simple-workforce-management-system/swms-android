@@ -9,7 +9,7 @@
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
+            android:label="@string/global__app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/SwmsTheme"
@@ -25,21 +25,21 @@
         </activity>
         <activity
                 android:name=".DashboardActivity"
-                android:label="@string/dashboard_activity_title"
+                android:label="@string/dashboard__activity_title"
                 android:theme="@style/Theme.AppCompat" />
 
 
         <activity
                 android:name=".clients.ClientListActivity"
-                android:label="@string/client_list_activity_title"
+                android:label="@string/client_list__activity_title"
                 android:theme="@style/Theme.AppCompat" />
         <activity
                 android:name=".clients.ClientDetailActivity"
-                android:label="@string/client_detail_activity_title"
+                android:label="@string/client_detail__activity_title"
                 android:theme="@style/Theme.AppCompat" />
         <activity
                 android:name=".clients.ClientAddActivity"
-                android:label="@string/client_add_activity_title"
+                android:label="@string/client_add__activity_title"
                 android:theme="@style/Theme.AppCompat" />
 
 

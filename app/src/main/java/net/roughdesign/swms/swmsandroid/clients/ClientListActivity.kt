@@ -6,17 +6,18 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import com.android.volley.VolleyError
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.client_list__content.*
 import net.roughdesign.swms.swmsandroid.R
 import net.roughdesign.swms.swmsandroid.clients.models.Client
-import net.roughdesign.swms.swmsandroid.web.JsonRepository
-import net.roughdesign.swms.swmsandroid.web.ResponseReacter
+import net.roughdesign.swms.swmsandroid.web.WebErrorHandler
+import net.roughdesign.swms.swmsandroid.web.repositories.JsonRepository
+import net.roughdesign.swms.swmsandroid.web.repositories.ResponseReacter
 
 
 class ClientListActivity : AppCompatActivity() {
@@ -40,9 +41,7 @@ class ClientListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.client_list__activity)
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
 
         setUpListView()
         repository = Client.getRepository(this)
@@ -82,15 +81,19 @@ class ClientListActivity : AppCompatActivity() {
         viewAdapter = ClientListRecyclerAdapter(this, clientList)
         viewManager = LinearLayoutManager(this)
 
-        recyclerView = findViewById<RecyclerView>(R.id.client_list_list).apply {
+        recyclerView = client_list_list.apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
         }
+
+        swiperefresh.setOnRefreshListener { requestClientListUpdate() }
     }
 
 
     private fun requestClientListUpdate() {
+
+        swiperefresh.isRefreshing = true
         repository.index(object : ResponseReacter() {
 
             override fun onResponse(response: ByteArray) {
@@ -102,12 +105,14 @@ class ClientListActivity : AppCompatActivity() {
                 clientList.clear()
                 clientList.addAll(clients)
                 viewAdapter.notifyDataSetChanged()
+                viewAdapter.notifyItemInserted(2)
+
+                swiperefresh.isRefreshing = false
             }
 
             override fun onErrorResponse(error: VolleyError) {
-                Log.e(ClientListActivity::class.toString(), error.message.toString())
-
-                TODO("not implemented")
+                WebErrorHandler.showFeedbackOnScreen(recyclerView, error)
+                swiperefresh.isRefreshing = false
             }
         })
     }

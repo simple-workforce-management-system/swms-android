@@ -5,6 +5,6 @@
     <item
             android:id="@+id/client_list_add"
             android:icon="@drawable/ic_add_black_24dp"
-            android:title="@string/client_list_menu_add"
+            android:title="@string/client_list__menu_add"
             app:showAsAction="ifRoom" />
 </menu>

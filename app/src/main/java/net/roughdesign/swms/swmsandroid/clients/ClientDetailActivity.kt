@@ -8,18 +8,17 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import com.android.volley.VolleyError
 import kotlinx.android.synthetic.main.client_detail__content.*
 import net.roughdesign.swms.swmsandroid.R
 import net.roughdesign.swms.swmsandroid.clients.models.Client
-import net.roughdesign.swms.swmsandroid.web.JsonRepository
-import net.roughdesign.swms.swmsandroid.web.ResponseReacter
+import net.roughdesign.swms.swmsandroid.web.WebErrorHandler
+import net.roughdesign.swms.swmsandroid.web.repositories.JsonRepository
+import net.roughdesign.swms.swmsandroid.web.repositories.ResponseReacter
 
 
 class ClientDetailActivity : AppCompatActivity() {
@@ -79,7 +78,7 @@ class ClientDetailActivity : AppCompatActivity() {
                 true
             }
             R.id.client_detail_delete_button -> {
-                deleteClient()
+                showDeleteConfirmDialog()
                 true
             }
             else -> {
@@ -93,34 +92,40 @@ class ClientDetailActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle("Confirmation")
             .setMessage("Save changes?")
+            .setPositiveButton(android.R.string.yes) { dialog, which -> saveClient() }
+            .setNegativeButton(android.R.string.no) { dialog, which -> }
+            .show()
+    }
 
-            .setPositiveButton(android.R.string.yes) { dialog, which ->
 
-                val name = client_name.text.toString()
-                val contactData = client_contact.text.toString()
-                val updatedClient = Client(client.id, name, contactData)
+    private fun saveClient() {
+        val name = client_name.text.toString()
+        val contactData = client_contact.text.toString()
+        val updatedClient = Client(client.id, name, contactData)
 
-                repository.update(updatedClient, object : ResponseReacter() {
-                    override fun onResponse(response: ByteArray) {
-                        Snackbar.make(
-                            findViewById(R.id.activity_view),
-                            "Saved successfully", Snackbar.LENGTH_LONG
-                        )
-                            .setAction("Action", null).show()
-                    }
-
-                    override fun onErrorResponse(error: VolleyError) {
-                        TODO("not implemented")
-                    }
-                })
-
-                Toast.makeText(
-                    applicationContext,
-                    android.R.string.yes, Toast.LENGTH_SHORT
-                ).show()
+        repository.update(updatedClient, object : ResponseReacter() {
+            override fun onResponse(response: ByteArray) {
+                Snackbar.make(
+                    findViewById(R.id.activity_view),
+                    "Saved successfully", Snackbar.LENGTH_LONG
+                )
+                    .setAction("Action", null).show()
             }
-            .setNegativeButton(android.R.string.no) { dialog, which ->
+
+            override fun onErrorResponse(error: VolleyError) {
+                WebErrorHandler.showFeedbackOnScreen(findViewById(R.id.activity_view), error)
             }
+        })
+    }
+
+
+    private fun showDeleteConfirmDialog() {
+
+        AlertDialog.Builder(this)
+            .setTitle("Confirmation")
+            .setMessage("Delete client?")
+            .setPositiveButton(android.R.string.yes) { dialog, which -> deleteClient() }
+            .setNegativeButton(android.R.string.no) { dialog, which -> }
             .show()
     }
 
@@ -137,8 +142,7 @@ class ClientDetailActivity : AppCompatActivity() {
             }
 
             override fun onErrorResponse(error: VolleyError) {
-                Log.e(ClientDetailActivity::class.toString(), error.message.toString())
-                TODO("not implemented")
+                WebErrorHandler.showFeedbackOnScreen(findViewById(R.id.activity_view), error)
             }
         })
     }
