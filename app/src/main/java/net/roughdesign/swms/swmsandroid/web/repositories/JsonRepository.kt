@@ -45,8 +45,7 @@ class JsonRepository<T>(
     private fun sendRequest(apiAccess: ApiAccess, requestBody: String?, responseReacter: ResponseReacter) {
 
         Log.i(JsonRepository::class.java.simpleName, "Requesting " + apiAccess.url)
-        val request =
-            JsonObjectRequest(apiAccess, requestBody, responseReacter)
+        val request = JsonObjectRequest(apiAccess, requestBody, responseReacter)
         val retryPolicy = DefaultRetryPolicy(3000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
         request.retryPolicy = retryPolicy
         requestQueue.add(request)
