@@ -3,17 +3,35 @@
         xmlns:tools="http://schemas.android.com/tools"
         package="net.roughdesign.swms.swmsandroid">
 
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
     <application
             android:allowBackup="true"
+            android:fullBackupContent="@xml/backup_descriptor"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/global__app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/SwmsTheme"
             tools:ignore="GoogleAppIndexingWarning">
+
+        <service
+                android:name=".users.SwmsAuthenticatorService"
+                android:exported="false">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                    android:name="android.accounts.AccountAuthenticator"
+                    android:resource="@xml/authenticator" />
+        </service>
 
         <activity
                 android:name=".StartupActivity"
@@ -23,6 +41,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <activity
+                android:name=".users.AuthenticateActivity"
+                android:label="@string/authenticate__title"
+                android:theme="@style/Theme.AppCompat" />
+
+
         <activity
                 android:name=".DashboardActivity"
                 android:label="@string/dashboard__activity_title"
@@ -41,8 +67,6 @@
                 android:name=".clients.ClientAddActivity"
                 android:label="@string/client_add__activity_title"
                 android:theme="@style/Theme.AppCompat" />
-
-
     </application>
 
 </manifest>

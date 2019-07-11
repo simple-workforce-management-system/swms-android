@@ -21,12 +21,12 @@ object SwmsLogin {
 
     init {
 
-        val url = URL(ServerConfiguration.url, "users/authenticate/")
+        val url = URL(ServerConfiguration.url, "users/authenticate")
         apiAccess = ApiAccess(Request.Method.POST, url)
     }
 
 
-    fun Login(context: Context, userName: String, password: String, responseReacter: ResponseReacter) {
+    fun login(context: Context, userName: String, password: String, responseReacter: ResponseReacter) {
 
         Log.i(JsonRepository::class.java.simpleName, "Requesting " + apiAccess.url)
         val requestBody = createRequestBody(userName, password)
@@ -43,10 +43,15 @@ object SwmsLogin {
         return Gson().toJson(jsonObject)
     }
 
+
     private fun createRequest(requestBody: String?, responseReacter: ResponseReacter): JsonObjectRequest {
         val request = JsonObjectRequest(apiAccess, requestBody, responseReacter)
         val retryPolicy = DefaultRetryPolicy(3000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
         request.retryPolicy = retryPolicy
         return request
+    }
+
+    fun getAuthToken(username: String, password: String): String {
+        TODO("not implemented")
     }
 }

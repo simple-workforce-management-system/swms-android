@@ -1,5 +1,6 @@
 package net.roughdesign.swms.swmsandroid.clients
 
+import android.accounts.Account
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -23,8 +24,11 @@ import net.roughdesign.swms.swmsandroid.web.repositories.ResponseReacter
 class ClientListActivity : AppCompatActivity() {
 
     companion object {
-        fun start(context: Context) {
+        private const val ARG_ACCOUNT = "ARG_ACCOUNT"
+
+        fun start(context: Context, account: Account) {
             val intent = Intent(context, ClientListActivity::class.java)
+            intent.putExtra(ARG_ACCOUNT, account)
             context.startActivity(intent)
         }
     }
@@ -42,6 +46,10 @@ class ClientListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.client_list__activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        var account = intent.getParcelableExtra<Account>(ARG_ACCOUNT)
+
+
 
         setUpListView()
         repository = Client.getRepository(this)
