@@ -1,4 +1,9 @@
 <resources>
+
+    <string name="config__web__server_address">http://swmsapi.azurewebsites.net/</string>
+
+
+
     <string name="global__app_name">SWMS</string>
     <string name="global__authenticator_account_label">SWMS</string>
 

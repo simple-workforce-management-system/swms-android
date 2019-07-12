@@ -8,3 +8,11 @@ abstract class ResponseReacter {
 
     abstract fun onErrorResponse(error: VolleyError)
 }
+
+
+abstract class StringResponseReacter {
+
+    abstract fun onResponse(response: String)
+
+    abstract fun onErrorResponse(error: VolleyError)
+}
