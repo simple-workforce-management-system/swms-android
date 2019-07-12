@@ -13,13 +13,18 @@ class StartupActivity : AppCompatActivity() {
 
 
         Handler().postDelayed({
-            DashboardActivity.start(this)
-            overridePendingTransition(R.anim.in_scale, R.anim.out_alpha)
-            finish()
-        }, 2000)
+            continueToDashboard()
+        }, 1000)
     }
 
 
     override fun onBackPressed() {
+    }
+
+
+    private fun continueToDashboard() {
+        DashboardActivity.start(this)
+        overridePendingTransition(R.anim.in_scale, R.anim.out_alpha)
+        finish()
     }
 }

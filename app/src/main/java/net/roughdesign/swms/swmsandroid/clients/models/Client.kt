@@ -1,6 +1,7 @@
 package net.roughdesign.swms.swmsandroid.clients.models
 
 import android.content.Context
+import net.roughdesign.swms.swmsandroid.web.ServerConfiguration
 import net.roughdesign.swms.swmsandroid.web.repositories.JsonRepository
 import net.roughdesign.swms.swmsandroid.web.repositories.SwmsRequestQueue
 import net.roughdesign.swms.swmsandroid.web.urlsets.UrlSet
@@ -22,7 +23,8 @@ data class Client(val id: Long, val name: String, val contactData: String) : Ser
 
 
         private fun createRepository(context: Context): JsonRepository<Client> {
-            val urlSet = UrlSet.createDefaultUrlSet(URL("http://swmsapi.azurewebsites.net/clients/"))
+            val url = URL(ServerConfiguration.url, "clients/")
+            val urlSet = UrlSet.createDefaultUrlSet(url)
             val requestQueue = SwmsRequestQueue.getRequestQueue(context)
             return JsonRepository(urlSet, requestQueue)
         }
