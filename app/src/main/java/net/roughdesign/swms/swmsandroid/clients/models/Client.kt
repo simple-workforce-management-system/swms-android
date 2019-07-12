@@ -10,23 +10,23 @@ import java.net.URL
 
 data class Client(val id: Long, val name: String, val contactData: String) : Serializable {
 
-    companion object {
+	companion object {
 
-        @Volatile
-        private var INSTANCE: JsonRepository<Client>? = null
-
-
-        fun getRepository(context: Context) =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE ?: createRepository(context).also { INSTANCE = it }
-            }
+		@Volatile
+		private var INSTANCE: JsonRepository<Client>? = null
 
 
-        private fun createRepository(context: Context): JsonRepository<Client> {
-            val url = URL(ServerConfiguration.url, "clients/")
-            val urlSet = UrlSet.createDefaultUrlSet(url)
-            val requestQueue = SwmsRequestQueue.getRequestQueue(context)
-            return JsonRepository(urlSet, requestQueue)
-        }
-    }
+		fun getRepository(context: Context) =
+			INSTANCE ?: synchronized(this) {
+				INSTANCE ?: createRepository(context).also { INSTANCE = it }
+			}
+
+
+		private fun createRepository(context: Context): JsonRepository<Client> {
+			val url = URL(ServerConfiguration.url, "clients/")
+			val urlSet = UrlSet.createDefaultUrlSet(url)
+			val requestQueue = SwmsRequestQueue.getRequestQueue(context)
+			return JsonRepository(urlSet, requestQueue)
+		}
+	}
 }

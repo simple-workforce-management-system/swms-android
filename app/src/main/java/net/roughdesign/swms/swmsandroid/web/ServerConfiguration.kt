@@ -4,7 +4,5 @@ import java.net.URL
 
 object ServerConfiguration {
 
-    val url = URL("http://swmsapi.azurewebsites.net/")
-
-
+	val url = URL("http://swmsapi.azurewebsites.net/")
 }

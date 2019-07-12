@@ -6,8 +6,8 @@ import android.os.IBinder
 
 class SwmsAuthenticatorService : Service() {
 
-    override fun onBind(intent: Intent?): IBinder? {
-        val authenticator = SwmsAccountAuthenticator(this)
-        return authenticator.iBinder
-    }
+	override fun onBind(intent: Intent?): IBinder? {
+		val authenticator = SwmsAccountAuthenticator(this)
+		return authenticator.iBinder
+	}
 }

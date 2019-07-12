@@ -16,42 +16,42 @@ import java.net.URL
 
 object SwmsLogin {
 
-    private val apiAccess: ApiAccess
+	private val apiAccess: ApiAccess
 
 
-    init {
+	init {
 
-        val url = URL(ServerConfiguration.url, "users/authenticate")
-        apiAccess = ApiAccess(Request.Method.POST, url)
-    }
-
-
-    fun login(context: Context, userName: String, password: String, responseReacter: ResponseReacter) {
-
-        Log.i(JsonRepository::class.java.simpleName, "Requesting " + apiAccess.url)
-        val requestBody = createRequestBody(userName, password)
-        val request = createRequest(requestBody, responseReacter)
-        val requestQueue = SwmsRequestQueue.getRequestQueue(context)
-        requestQueue.add(request)
-    }
+		val url = URL(ServerConfiguration.url, "users/authenticate")
+		apiAccess = ApiAccess(Request.Method.POST, url)
+	}
 
 
-    private fun createRequestBody(userName: String, password: String): String? {
-        val jsonObject = JsonObject()
-        jsonObject.addProperty("username", userName)
-        jsonObject.addProperty("password", password)
-        return Gson().toJson(jsonObject)
-    }
+	fun login(context: Context, userName: String, password: String, responseReacter: ResponseReacter) {
+
+		Log.i(JsonRepository::class.java.simpleName, "Requesting " + apiAccess.url)
+		val requestBody = createRequestBody(userName, password)
+		val request = createRequest(requestBody, responseReacter)
+		val requestQueue = SwmsRequestQueue.getRequestQueue(context)
+		requestQueue.add(request)
+	}
 
 
-    private fun createRequest(requestBody: String?, responseReacter: ResponseReacter): JsonObjectRequest {
-        val request = JsonObjectRequest(apiAccess, requestBody, responseReacter)
-        val retryPolicy = DefaultRetryPolicy(3000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
-        request.retryPolicy = retryPolicy
-        return request
-    }
+	private fun createRequestBody(userName: String, password: String): String? {
+		val jsonObject = JsonObject()
+		jsonObject.addProperty("username", userName)
+		jsonObject.addProperty("password", password)
+		return Gson().toJson(jsonObject)
+	}
 
-    fun getAuthToken(username: String, password: String): String {
-        TODO("not implemented")
-    }
+
+	private fun createRequest(requestBody: String?, responseReacter: ResponseReacter): JsonObjectRequest {
+		val request = JsonObjectRequest(apiAccess, requestBody, responseReacter)
+		val retryPolicy = DefaultRetryPolicy(3000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+		request.retryPolicy = retryPolicy
+		return request
+	}
+
+	fun getAuthToken(username: String, password: String): String {
+		TODO("not implemented")
+	}
 }

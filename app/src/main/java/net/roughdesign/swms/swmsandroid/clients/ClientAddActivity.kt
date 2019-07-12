@@ -19,72 +19,72 @@ import org.jetbrains.anko.contentView
 
 class ClientAddActivity : AppCompatActivity() {
 
-    companion object {
-        fun start(context: Context) {
-            val intent = Intent(context, ClientAddActivity::class.java)
-            context.startActivity(intent)
-        }
-    }
+	companion object {
+		fun start(context: Context) {
+			val intent = Intent(context, ClientAddActivity::class.java)
+			context.startActivity(intent)
+		}
+	}
 
 
-    private lateinit var repo: JsonRepository<Client>
+	private lateinit var repo: JsonRepository<Client>
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.client_add__activity)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.client_add__activity)
+		supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
-        repo = Client.getRepository(this)
-    }
+		repo = Client.getRepository(this)
+	}
 
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+	override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.client_add__menu, menu)
-        return true
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
-            }
-            R.id.client_add_confirm_button -> {
-                openAddConfirmationDialog()
-                true
-            }
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
-        }
-    }
+		val inflater: MenuInflater = menuInflater
+		inflater.inflate(R.menu.client_add__menu, menu)
+		return true
+	}
 
 
-    private fun openAddConfirmationDialog() {
-        val name = client_name.text.toString()
-        val contactData = client_contact.text.toString()
+	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        val client = Client(0, name, contactData)
-        repo.create(client, object : ResponseReacter() {
+		return when (item.itemId) {
+			android.R.id.home -> {
+				onBackPressed()
+				true
+			}
+			R.id.client_add_confirm_button -> {
+				openAddConfirmationDialog()
+				true
+			}
+			else -> {
+				super.onOptionsItemSelected(item)
+			}
+		}
+	}
 
-            override fun onResponse(response: ByteArray) {
-                Snackbar.make(
-                    findViewById(R.id.activity_view),
-                    "Saved successfully", Snackbar.LENGTH_LONG
-                )
-                    .setAction("Action", null).show()
-                finish()
-            }
 
-            override fun onErrorResponse(error: VolleyError) {
-                WebErrorHandler.showFeedbackOnScreen(contentView!!, error)
-            }
-        })
-    }
+	private fun openAddConfirmationDialog() {
+		val name = client_name.text.toString()
+		val contactData = client_contact.text.toString()
+
+		val client = Client(0, name, contactData)
+		repo.create(client, object : ResponseReacter() {
+
+			override fun onResponse(response: ByteArray) {
+				Snackbar.make(
+					findViewById(R.id.activity_view),
+					"Saved successfully", Snackbar.LENGTH_LONG
+				)
+					.setAction("Action", null).show()
+				finish()
+			}
+
+			override fun onErrorResponse(error: VolleyError) {
+				WebErrorHandler.showFeedbackOnScreen(contentView!!, error)
+			}
+		})
+	}
 }
