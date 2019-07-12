@@ -20,7 +20,10 @@ class EventI<T> {
 
 
     fun invoke(value: T) {
-        val observers = _observers.toList()
+        var observers: Iterable<(T) -> Unit>
+        synchronized(_lock) {
+            observers = _observers.toList()
+        }
         for (observer in observers) {
             observer(value)
         }

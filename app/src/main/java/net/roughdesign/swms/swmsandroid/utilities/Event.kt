@@ -19,7 +19,10 @@ class Event {
     }
 
     fun invoke() {
-        val observers = _observers.toList()
+        var observers: Iterable<Runnable>
+        synchronized(_lock) {
+            observers = _observers.toList()
+        }
         for (observer in observers) {
             observer.run()
         }
