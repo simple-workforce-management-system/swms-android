@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import kotlinx.android.synthetic.main.dashboard__content.*
-import net.roughdesign.swms.swmsandroid.clients.ClientListActivity
+import net.roughdesign.swms.swmsandroid.clients.activities.list.ClientListActivity
 import net.roughdesign.swms.swmsandroid.users.AuthenticateActivity
 
 class DashboardActivity : AppCompatActivity() {

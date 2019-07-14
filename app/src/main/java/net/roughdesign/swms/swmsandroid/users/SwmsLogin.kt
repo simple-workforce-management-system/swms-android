@@ -6,31 +6,27 @@ import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import net.roughdesign.swms.swmsandroid.web.ServerConfiguration
-import net.roughdesign.swms.swmsandroid.web.repositories.JsonObjectRequest
-import net.roughdesign.swms.swmsandroid.web.repositories.JsonRepository
-import net.roughdesign.swms.swmsandroid.web.repositories.ResponseReacter
-import net.roughdesign.swms.swmsandroid.web.repositories.SwmsRequestQueue
-import net.roughdesign.swms.swmsandroid.web.urlsets.ApiAccess
+import net.roughdesign.swms.swmsandroid.R
+import net.roughdesign.swms.swmsandroid.utilities.web.repositories.JsonObjectRequest
+import net.roughdesign.swms.swmsandroid.utilities.web.repositories.ResponseReacter
+import net.roughdesign.swms.swmsandroid.utilities.web.repositories.SwmsRequestQueue
+import net.roughdesign.swms.swmsandroid.utilities.web.urlsets.ApiAccess
 import java.net.URL
 
 object SwmsLogin {
 
-	private val apiAccess: ApiAccess
-
-
-	init {
-
-		val url = URL(ServerConfiguration.url, "users/authenticate")
-		apiAccess = ApiAccess(Request.Method.POST, url)
-	}
-
 
 	fun login(context: Context, userName: String, password: String, responseReacter: ResponseReacter) {
 
-		Log.i(JsonRepository::class.java.simpleName, "Requesting " + apiAccess.url)
+		val baseUrl = URL(context.getString(R.string.config__web__server_address))
+		val url = URL(baseUrl, "users/authenticate")
+
+		Log.i(SwmsLogin::class.java.simpleName, "Requesting $url")
+		val apiAccess = ApiAccess(Request.Method.POST, url)
+
+
 		val requestBody = createRequestBody(userName, password)
-		val request = createRequest(requestBody, responseReacter)
+		val request = createRequest(apiAccess, requestBody, responseReacter)
 		val requestQueue = SwmsRequestQueue.getRequestQueue(context)
 		requestQueue.add(request)
 	}
@@ -44,8 +40,16 @@ object SwmsLogin {
 	}
 
 
-	private fun createRequest(requestBody: String?, responseReacter: ResponseReacter): JsonObjectRequest {
-		val request = JsonObjectRequest(apiAccess, requestBody, responseReacter)
+	private fun createRequest(
+		apiAccess: ApiAccess,
+		requestBody: String?,
+		responseReacter: ResponseReacter
+	): JsonObjectRequest {
+		val request = JsonObjectRequest(
+			apiAccess,
+			requestBody,
+			responseReacter
+		)
 		val retryPolicy = DefaultRetryPolicy(3000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
 		request.retryPolicy = retryPolicy
 		return request

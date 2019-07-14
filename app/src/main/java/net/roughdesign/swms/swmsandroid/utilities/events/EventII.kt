@@ -1,4 +1,4 @@
-package net.roughdesign.swms.swmsandroid.utilities
+package net.roughdesign.swms.swmsandroid.utilities.events
 
 class EventII<T1, T2> {
 

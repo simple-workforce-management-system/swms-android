@@ -1,4 +1,4 @@
-package net.roughdesign.swms.swmsandroid.web.repositories
+package net.roughdesign.swms.swmsandroid.utilities.web.repositories
 
 import com.android.volley.VolleyError
 

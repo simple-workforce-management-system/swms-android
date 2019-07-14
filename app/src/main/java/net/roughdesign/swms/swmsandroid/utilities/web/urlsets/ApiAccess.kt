@@ -1,4 +1,4 @@
-package net.roughdesign.swms.swmsandroid.web.urlsets
+package net.roughdesign.swms.swmsandroid.utilities.web.urlsets
 
 import java.net.URL
 

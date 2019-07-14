@@ -1,11 +1,11 @@
-package net.roughdesign.swms.swmsandroid.web.repositories
+package net.roughdesign.swms.swmsandroid.utilities.web.repositories
 
 import com.android.volley.AuthFailureError
 import com.android.volley.NetworkResponse
 import com.android.volley.Response
 import com.android.volley.toolbox.HttpHeaderParser
 import com.android.volley.toolbox.JsonRequest
-import net.roughdesign.swms.swmsandroid.web.urlsets.ApiAccess
+import net.roughdesign.swms.swmsandroid.utilities.web.urlsets.ApiAccess
 
 
 class JsonObjectRequest(apiAccess: ApiAccess, requestBody: String?, responseReacter: ResponseReacter) :
@@ -29,7 +29,7 @@ class JsonObjectRequest(apiAccess: ApiAccess, requestBody: String?, responseReac
 	override fun getHeaders(): Map<String, String> {
 		val params = HashMap<String, String>()
 		params["Content-Type"] = "application/json"
-		TODO("create accesstoken")
+		TODO("createRepoModelConverter accesstoken")
 		params.put("Authorization", "Bearer " + "accesstoken")
         return params
 	}

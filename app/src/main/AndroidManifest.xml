@@ -56,15 +56,15 @@
 
 
         <activity
-                android:name=".clients.ClientListActivity"
+                android:name=".clients.activities.list.ClientListActivity"
                 android:label="@string/client_list__activity_title"
                 android:theme="@style/Theme.AppCompat" />
         <activity
-                android:name=".clients.ClientDetailActivity"
+                android:name=".clients.activities.detail.ClientDetailActivity"
                 android:label="@string/client_detail__activity_title"
                 android:theme="@style/Theme.AppCompat" />
         <activity
-                android:name=".clients.ClientAddActivity"
+                android:name=".clients.activities.add.ClientAddActivity"
                 android:label="@string/client_add__activity_title"
                 android:theme="@style/Theme.AppCompat" />
     </application>

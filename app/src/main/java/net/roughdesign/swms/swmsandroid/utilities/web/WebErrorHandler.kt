@@ -1,4 +1,4 @@
-package net.roughdesign.swms.swmsandroid.web
+package net.roughdesign.swms.swmsandroid.utilities.web
 
 import android.support.design.widget.Snackbar
 import android.util.Log
@@ -14,7 +14,8 @@ class WebErrorHandler {
 		fun showFeedbackOnScreen(view: View, error: VolleyError) {
 
 			Log.e("WebErrorHandler", error.message.toString())
-			val feedbackText = getFeedbackText(error)
+			val feedbackText =
+				getFeedbackText(error)
 			Snackbar.make(view, feedbackText, Snackbar.LENGTH_LONG).show()
 		}
 

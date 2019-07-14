@@ -13,8 +13,8 @@ import kotlinx.android.synthetic.main.authenticate__content.*
 import net.roughdesign.swms.swmsandroid.R
 import net.roughdesign.swms.swmsandroid.users.models.User
 import net.roughdesign.swms.swmsandroid.utilities.AppCompatAccountAuthenticatorActivity
-import net.roughdesign.swms.swmsandroid.web.WebErrorHandler
-import net.roughdesign.swms.swmsandroid.web.repositories.ResponseReacter
+import net.roughdesign.swms.swmsandroid.utilities.web.WebErrorHandler
+import net.roughdesign.swms.swmsandroid.utilities.web.repositories.ResponseReacter
 import org.jetbrains.anko.contentView
 
 
