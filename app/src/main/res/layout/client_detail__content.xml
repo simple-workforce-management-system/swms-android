@@ -7,7 +7,7 @@
         android:orientation="vertical"
         android:padding="24dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".clients.ClientDetailActivity"
+        tools:context=".clients.activities.detail.ClientDetailActivity"
         tools:showIn="@layout/client_detail__activity">
 
     <EditText

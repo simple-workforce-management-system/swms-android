@@ -1,32 +1,11 @@
 package net.roughdesign.swms.swmsandroid.clients.models
 
-import android.content.Context
-import net.roughdesign.swms.swmsandroid.web.ServerConfiguration
-import net.roughdesign.swms.swmsandroid.web.repositories.JsonRepository
-import net.roughdesign.swms.swmsandroid.web.repositories.SwmsRequestQueue
-import net.roughdesign.swms.swmsandroid.web.urlsets.UrlSet
-import java.io.Serializable
-import java.net.URL
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-data class Client(val id: Long, val name: String, val contactData: String) : Serializable {
-
-    companion object {
-
-        @Volatile
-        private var INSTANCE: JsonRepository<Client>? = null
-
-
-        fun getRepository(context: Context) =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE ?: createRepository(context).also { INSTANCE = it }
-            }
-
-
-        private fun createRepository(context: Context): JsonRepository<Client> {
-            val url = URL(ServerConfiguration.url, "clients/")
-            val urlSet = UrlSet.createDefaultUrlSet(url)
-            val requestQueue = SwmsRequestQueue.getRequestQueue(context)
-            return JsonRepository(urlSet, requestQueue)
-        }
-    }
-}
+@Parcelize
+data class Client(
+	val id: Long?,
+	val name: String?,
+	val contactData: String?
+) : Parcelable
