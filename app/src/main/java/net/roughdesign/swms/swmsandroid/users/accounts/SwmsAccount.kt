@@ -9,7 +9,6 @@ import android.os.Bundle
 
 class SwmsAccount(
 	private val accountManager: AccountManager,
-	private val accountType: String,
 	private val authTokenType: String,
 	private val account: Account
 ) {

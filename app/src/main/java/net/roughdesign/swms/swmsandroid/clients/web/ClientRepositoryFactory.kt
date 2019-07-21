@@ -19,11 +19,6 @@ object ClientRepositoryFactory {
 		val clientConverter = ClientJsonConverterFactory.create()
 		val requestQueue: RequestQueue = RequestQueueFactory.getOrCreate(context)
 
-		return Repository(
-			clientBaseUrl,
-			authToken,
-			clientConverter,
-			requestQueue
-		)
+		return Repository(clientBaseUrl,authToken,clientConverter,requestQueue)
 	}
 }

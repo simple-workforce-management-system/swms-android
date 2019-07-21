@@ -12,12 +12,6 @@ class EventI<T> {
 		}
 	}
 
-	operator fun minusAssign(observer: (T) -> Unit) {
-		synchronized(_lock) {
-			_observers.remove(observer)
-		}
-	}
-
 
 	fun invoke(value: T) {
 		var observers: Iterable<(T) -> Unit>

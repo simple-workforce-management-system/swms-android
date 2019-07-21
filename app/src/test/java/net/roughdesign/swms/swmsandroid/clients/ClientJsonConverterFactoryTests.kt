@@ -1,4 +1,4 @@
-package net.roughdesign.swms.swmsandroid
+package net.roughdesign.swms.swmsandroid.clients
 
 import junit.framework.Assert.assertEquals
 import net.roughdesign.swms.swmsandroid.clients.models.Client

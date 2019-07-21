@@ -41,12 +41,7 @@ class SwmsAccountRequest(
 
 
 	private fun finishWithSuccess(account: Account) {
-		val swmsAccountManager = SwmsAccount(
-			accountManager,
-			accountType,
-			authTokenType,
-			account
-		)
+		val swmsAccountManager = SwmsAccount(accountManager, accountType, account)
 		whenDone.invoke(swmsAccountManager)
 	}
 }
