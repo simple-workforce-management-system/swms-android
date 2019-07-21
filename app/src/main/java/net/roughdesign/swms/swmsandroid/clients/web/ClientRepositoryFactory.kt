@@ -3,18 +3,27 @@ package net.roughdesign.swms.swmsandroid.clients.web
 import android.content.Context
 import com.android.volley.RequestQueue
 import net.roughdesign.swms.swmsandroid.R
-import net.roughdesign.swms.swmsandroid.utilities.web.repositories.SwmsRequestQueue
+import net.roughdesign.swms.swmsandroid.clients.models.Client
+import net.roughdesign.swms.swmsandroid.users.authtokens.JsonWebToken
+import net.roughdesign.swms.swmsandroid.utilities.web.repositories.Repository
+import net.roughdesign.swms.swmsandroid.utilities.web.requests.RequestQueueFactory
 import java.net.URL
 
-class ClientRepositoryFactory(private val clientJsonConverterFactory: ClientJsonConverterFactory) {
+object ClientRepositoryFactory {
 
 
-	fun create(context: Context, authToken: String): ClientRepository {
+	fun create(context: Context, authToken: JsonWebToken): Repository<Client> {
 
-		val baseUrl = URL(context.getString(R.string.config__web__server_address))
-		val clientConverter = clientJsonConverterFactory.createRepoModelConverter()
-		val requestQueue: RequestQueue = SwmsRequestQueue.getRequestQueue(context)
+		val serverUrl = URL(context.getString(R.string.config__web__server_address))
+		val clientBaseUrl = URL(serverUrl, "clients/")
+		val clientConverter = ClientJsonConverterFactory.create()
+		val requestQueue: RequestQueue = RequestQueueFactory.getOrCreate(context)
 
-		return ClientRepository(baseUrl, authToken, clientConverter, requestQueue)
+		return Repository(
+			clientBaseUrl,
+			authToken,
+			clientConverter,
+			requestQueue
+		)
 	}
 }

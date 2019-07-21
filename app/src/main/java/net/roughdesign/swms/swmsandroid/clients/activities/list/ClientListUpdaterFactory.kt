@@ -5,17 +5,21 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import net.roughdesign.swms.swmsandroid.clients.models.Client
-import net.roughdesign.swms.swmsandroid.clients.web.ClientRepository
+import net.roughdesign.swms.swmsandroid.users.authtokens.JsonWebToken
+import net.roughdesign.swms.swmsandroid.utilities.web.repositories.Repository
 
-class ClientListUpdaterFactory {
+object ClientListUpdaterFactory {
 
 	fun create(
-		repository: ClientRepository, activity: Activity, clientListList: RecyclerView, swiperefresh: SwipeRefreshLayout
+		repository: Repository<Client>,
+		activity: Activity,
+		clientListList: RecyclerView,
+		swiperefresh: SwipeRefreshLayout,
+		authToken: JsonWebToken
 	): ClientListUpdater {
 
 		val clientList = arrayListOf<Client>()
-		val viewAdapter =
-			ClientListRecyclerAdapter(activity, clientList)
+		val viewAdapter = ClientListRecyclerAdapter(activity, authToken, clientList)
 		val viewManager = LinearLayoutManager(activity)
 
 		val recyclerView = clientListList.apply {
@@ -24,12 +28,6 @@ class ClientListUpdaterFactory {
 			adapter = viewAdapter
 		}
 
-		return ClientListUpdater(
-			repository,
-			swiperefresh,
-			recyclerView,
-			viewAdapter,
-			clientList
-		)
+		return ClientListUpdater(repository, swiperefresh, recyclerView, viewAdapter, clientList)
 	}
 }

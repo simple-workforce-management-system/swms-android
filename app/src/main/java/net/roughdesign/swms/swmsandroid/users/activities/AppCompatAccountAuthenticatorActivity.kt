@@ -1,4 +1,4 @@
-package net.roughdesign.swms.swmsandroid.utilities
+package net.roughdesign.swms.swmsandroid.users.activities
 
 import android.accounts.AccountAuthenticatorResponse
 import android.accounts.AccountManager

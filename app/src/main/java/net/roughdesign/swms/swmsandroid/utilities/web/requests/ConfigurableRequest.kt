@@ -1,27 +1,31 @@
-package net.roughdesign.swms.swmsandroid.utilities.web.configurablerequests
+package net.roughdesign.swms.swmsandroid.utilities.web.requests
 
-import com.android.volley.AuthFailureError
-import com.android.volley.NetworkResponse
-import com.android.volley.Request
-import com.android.volley.Response
+import com.android.volley.*
 import com.android.volley.toolbox.HttpHeaderParser
 import net.roughdesign.swms.swmsandroid.utilities.events.EventI
 import java.net.URL
+
 
 class ConfigurableRequest(method: Int, url: URL, errorListener: Response.ErrorListener?) :
 	Request<ByteArray>(method, url.toString(), errorListener) {
 
 
 	val headers = HashMap<String, String>()
-	private var bodyContentType : String? = null
-	private	var ownBody:ByteArray? = ByteArray(0)
+	private var bodyContentType: String? = null
+	private var ownBody: ByteArray? = ByteArray(0)
 
 	val whenFinished = EventI<ByteArray?>()
+	val whenErrorOccured = EventI<VolleyError>()
 
 
 	@Throws(AuthFailureError::class)
 	override fun getHeaders(): Map<String, String> {
 		return headers
+	}
+
+
+	fun setBodyContentType(bodyContentType: String) {
+		this.bodyContentType = bodyContentType
 	}
 
 
@@ -33,16 +37,13 @@ class ConfigurableRequest(method: Int, url: URL, errorListener: Response.ErrorLi
 		}
 	}
 
-	fun setBodyContentType(bodyContentType:String){
-		this.bodyContentType = bodyContentType
+
+	fun setRequestBody(byteArray: ByteArray?) {
+		ownBody = byteArray
 	}
 
 	override fun getBody(): ByteArray? {
 		return ownBody
-	}
-
-	fun setRequestBody(byteArray:ByteArray?){
-		ownBody = byteArray
 	}
 
 
@@ -56,5 +57,11 @@ class ConfigurableRequest(method: Int, url: URL, errorListener: Response.ErrorLi
 
 	override fun deliverResponse(response: ByteArray?) {
 		whenFinished.invoke(response)
+	}
+
+
+	override fun deliverError(error: VolleyError) {
+		super.deliverError(error)
+		whenErrorOccured.invoke(error)
 	}
 }

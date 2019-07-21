@@ -1,4 +1,4 @@
-package net.roughdesign.swms.swmsandroid.users
+package net.roughdesign.swms.swmsandroid.users.authenticator
 
 import android.app.Service
 import android.content.Intent

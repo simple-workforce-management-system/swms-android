@@ -6,13 +6,13 @@ import android.support.v7.app.AlertDialog
 import android.view.View
 import com.android.volley.Response
 import net.roughdesign.swms.swmsandroid.clients.models.Client
-import net.roughdesign.swms.swmsandroid.clients.web.ClientRepository
-import net.roughdesign.swms.swmsandroid.utilities.web.DefaultErrorListener
+import net.roughdesign.swms.swmsandroid.utilities.web.errors.ViewErrorListener
+import net.roughdesign.swms.swmsandroid.utilities.web.repositories.Repository
 
 class ClientAddPresenter(
 	private val activity: Activity,
 	private val view: View,
-	private val clientRepository: ClientRepository,
+	private val clientRepository: Repository<Client>,
 	private var client: Client
 ){
 
@@ -31,7 +31,7 @@ class ClientAddPresenter(
 	private fun saveClient(name:String, contactData:String) {
 			val updatedClient = Client(client.id, name, contactData)
 		val responseListener = Response.Listener<Client> {			reactToSuccessfulSaving(it)		}
-		val errorListener = DefaultErrorListener(view)
+		val errorListener = ViewErrorListener(view)
 		clientRepository.save(updatedClient, responseListener, errorListener)
 
 	}
@@ -66,8 +66,8 @@ class ClientAddPresenter(
 		if (id == null) TODO("delete fail error message")
 
 		val responseListener = Response.Listener<Boolean> {			reactToSuccessfulDeletion()		}
-		val errorListener = DefaultErrorListener(view)
-		clientRepository.delete(client, responseListener, errorListener)
+		val errorListener = ViewErrorListener(view)
+		clientRepository.delete(id, responseListener, errorListener)
 	}
 
 

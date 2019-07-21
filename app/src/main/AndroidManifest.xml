@@ -23,7 +23,7 @@
             tools:ignore="GoogleAppIndexingWarning">
 
         <service
-                android:name=".users.SwmsAuthenticatorService"
+                android:name=".users.authenticator.SwmsAuthenticatorService"
                 android:exported="false">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
@@ -44,7 +44,7 @@
 
 
         <activity
-                android:name=".users.AuthenticateActivity"
+                android:name=".users.activities.AuthenticateActivity"
                 android:label="@string/authenticate__title"
                 android:theme="@style/Theme.AppCompat" />
 

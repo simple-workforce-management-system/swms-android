@@ -5,11 +5,11 @@ import android.support.v7.widget.RecyclerView
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import net.roughdesign.swms.swmsandroid.clients.models.Client
-import net.roughdesign.swms.swmsandroid.clients.web.ClientRepository
-import net.roughdesign.swms.swmsandroid.utilities.web.WebErrorHandler
+import net.roughdesign.swms.swmsandroid.utilities.web.repositories.Repository
+import net.roughdesign.swms.swmsandroid.utilities.web.errors.WebErrorHandler
 
 class ClientListUpdater(
-	private val repository: ClientRepository,
+	private val repository: Repository<Client>,
 	private val swiperefresh: SwipeRefreshLayout,
 	private var recyclerView: RecyclerView,
 	private val viewAdapter: RecyclerView.Adapter<*>,
@@ -41,10 +41,7 @@ class ClientListUpdater(
 
 
 	private fun respondToError(error: VolleyError?) {
-		if (error != null) WebErrorHandler.showFeedbackOnScreen(
-			recyclerView,
-			error
-		)
+		if (error != null) WebErrorHandler.showFeedbackOnScreen(recyclerView,error)
 		swiperefresh.isRefreshing = false
 	}
 }

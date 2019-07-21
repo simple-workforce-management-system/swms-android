@@ -9,9 +9,15 @@ import android.widget.TextView
 import net.roughdesign.swms.swmsandroid.R
 import net.roughdesign.swms.swmsandroid.clients.activities.detail.ClientDetailActivity
 import net.roughdesign.swms.swmsandroid.clients.models.Client
+import net.roughdesign.swms.swmsandroid.users.authtokens.JsonWebToken
 
-class ClientListRecyclerAdapter(val activity: Activity, private val clients: List<Client>) :
+class ClientListRecyclerAdapter(
+	private val activity: Activity,
+	private val authToken: JsonWebToken,
+	private val clients: List<Client>
+) :
 	RecyclerView.Adapter<ClientListRecyclerAdapter.ViewHolder>() {
+
 
 	class ViewHolder(val constraintLayout: ConstraintLayout) : RecyclerView.ViewHolder(constraintLayout)
 
@@ -34,11 +40,7 @@ class ClientListRecyclerAdapter(val activity: Activity, private val clients: Lis
 		title.text = client.name
 
 		constraintLayout.setOnClickListener {
-			ClientDetailActivity.start(
-				activity,
-				holder.constraintLayout,
-				client
-			)
+			ClientDetailActivity.start(activity, holder.constraintLayout, authToken, client)
 		}
 	}
 

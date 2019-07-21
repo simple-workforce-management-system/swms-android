@@ -1,4 +1,4 @@
-package net.roughdesign.swms.swmsandroid.users
+package net.roughdesign.swms.swmsandroid.users.authenticator
 
 import android.accounts.AbstractAccountAuthenticator
 import android.accounts.Account
@@ -7,25 +7,20 @@ import android.accounts.AccountManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import net.roughdesign.swms.swmsandroid.R
+import net.roughdesign.swms.swmsandroid.users.activities.AuthenticateActivity
 
 
 class SwmsAccountAuthenticator(val context: Context) : AbstractAccountAuthenticator(context) {
 
-	companion object {
-		const val ARG_ACCOUNT_TYPE = "ARG_ACCOUNT_TYPE"
-		const val ARG_AUTH_TYPE = "ARG_AUTH_TYPE"
-		const val ARG_IS_ADDING_NEW_ACCOUNT = "ARG_IS_ADDING_NEW_ACCOUNT"
-	}
 
 	override fun addAccount(
 		response: AccountAuthenticatorResponse, accountType: String, authTokenType: String?,
 		requiredFeatures: Array<out String>?, options: Bundle?
 	): Bundle {
 		Log.i(this::class.java.simpleName, "addAccount")
-		val intent = AuthenticateActivity.start(context, true)
+		val intent = AuthenticateActivity.createIntent(context, true)
 		intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response)
 		val bundle = Bundle()
 		bundle.putParcelable(AccountManager.KEY_INTENT, intent)
@@ -54,38 +49,11 @@ class SwmsAccountAuthenticator(val context: Context) : AbstractAccountAuthentica
 	override fun getAuthToken(
 		response: AccountAuthenticatorResponse, account: Account, authTokenType: String, options: Bundle?
 	): Bundle? {
+
 		Log.i(this::class.java.simpleName, "getAuthToken")
-
-		val accountManager = AccountManager.get(context)
-		var authToken = accountManager.peekAuthToken(account, authTokenType)
-		val hasAuthToken = !TextUtils.isEmpty(authToken)
-		if (hasAuthToken) {
-			val result = Bundle()
-			result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name)
-			result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type)
-			result.putString(AccountManager.KEY_AUTHTOKEN, authToken)
-			return result
-		}
-
-
-		val username = account.name
-		val password = accountManager.getPassword(account)
-		if (password != null) {
-			authToken = SwmsLogin.getAuthToken(username, password)
-			if (!TextUtils.isEmpty(authToken)) {
-				val result = Bundle()
-				result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name)
-				result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type)
-				result.putString(AccountManager.KEY_AUTHTOKEN, authToken)
-				return result
-			}
-		}
-
-		val intent = AuthenticateActivity.start(context, false)
-		intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response)
-		val bundle = Bundle()
-		bundle.putParcelable(AccountManager.KEY_INTENT, intent)
-		return bundle
+		val getAuthTokenProcess = GetAuthTokenProcess(context, account, response)
+		getAuthTokenProcess.start()
+		return null
 	}
 
 
@@ -115,3 +83,4 @@ class SwmsAccountAuthenticator(val context: Context) : AbstractAccountAuthentica
 		return bundle
 	}
 }
+

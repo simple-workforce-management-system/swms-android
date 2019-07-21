@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.client_detail__content.*
 import net.roughdesign.swms.swmsandroid.R
 import net.roughdesign.swms.swmsandroid.clients.models.Client
 import net.roughdesign.swms.swmsandroid.clients.web.ClientRepositoryFactory
-import net.roughdesign.swms.swmsandroid.utilities.dependencyinjection.DI
+import net.roughdesign.swms.swmsandroid.users.authtokens.JsonWebToken
 
 
 class ClientDetailActivity : AppCompatActivity() {
@@ -28,10 +28,9 @@ class ClientDetailActivity : AppCompatActivity() {
 		setContentView(R.layout.client_detail__activity)
 		supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-		val authToken: String = intent.getStringExtra(ARG_AUTH_TOKEN)
-		val clientRepositoryFactory = DI.resolve(ClientRepositoryFactory::class.java)
-		val clientRepository = clientRepositoryFactory.create(this, authToken)
-		val client = intent.getSerializableExtra(ARG_CLIENT) as Client
+		val jsonWebToken = intent.getParcelableExtra(ARG_AUTH_TOKEN) as JsonWebToken
+		val clientRepository = ClientRepositoryFactory.create(this, jsonWebToken)
+		val client = intent.getParcelableExtra(ARG_CLIENT) as Client
 		clientAddPresenter = ClientAddPresenter(this, activity_view, clientRepository, client)
 
 		client_name.setText(client.name)
@@ -70,7 +69,7 @@ class ClientDetailActivity : AppCompatActivity() {
 		private const val ARG_AUTH_TOKEN = "ARG_AUTH_TOKEN"
 		private const val ARG_CLIENT = "ClientDetailActivity"
 
-		fun start(activity: Activity, sourceView: View, authToken: String, client: Client) {
+		fun start(activity: Activity, sourceView: View, authToken: JsonWebToken, client: Client) {
 			val intent = Intent(activity, ClientDetailActivity::class.java)
 			intent.putExtra(ARG_AUTH_TOKEN, authToken)
 			intent.putExtra(ARG_CLIENT, client)

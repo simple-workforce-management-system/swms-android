@@ -1,6 +1,5 @@
 package net.roughdesign.swms.swmsandroid.clients.activities.list
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -11,17 +10,14 @@ import kotlinx.android.synthetic.main.client_list__content.*
 import net.roughdesign.swms.swmsandroid.R
 import net.roughdesign.swms.swmsandroid.clients.activities.add.ClientAddActivity
 import net.roughdesign.swms.swmsandroid.clients.web.ClientRepositoryFactory
-import net.roughdesign.swms.swmsandroid.clients.web.ClientRepository
-import net.roughdesign.swms.swmsandroid.utilities.dependencyinjection.DI
+import net.roughdesign.swms.swmsandroid.users.authtokens.AuthTokenRequest
+import net.roughdesign.swms.swmsandroid.users.authtokens.JsonWebToken
 
 
 class ClientListActivity : AppCompatActivity() {
 
 
-	private lateinit var authToken: String
-	private lateinit var repository: ClientRepository
-
-	private lateinit var clientListUpdater: ClientListUpdater
+	private var clientListUpdater: ClientListUpdater? = null
 
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,13 +25,9 @@ class ClientListActivity : AppCompatActivity() {
 		setContentView(R.layout.client_list__activity)
 		supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-		val clientRepositoryFactory = DI.resolve(ClientRepositoryFactory::class.java)
-		val clientListUpdaterFactory = DI.resolve(ClientListUpdaterFactory::class.java)
-
-		authToken = intent.getStringExtra(ARG_AUTH_TOKEN)
-		repository = clientRepositoryFactory.create(this, authToken)
-		clientListUpdater = clientListUpdaterFactory.create(repository, this, client_list_list, swiperefresh)
-		swiperefresh.setOnRefreshListener { clientListUpdater.requestClientListUpdate() }
+		val authTokenRequest = AuthTokenRequest(this)
+		authTokenRequest.whenRequestFinished += { reactToAuthToken(it) }
+		authTokenRequest.start()
 	}
 
 
@@ -54,7 +46,8 @@ class ClientListActivity : AppCompatActivity() {
 				true
 			}
 			R.id.client_list_add -> {
-				ClientAddActivity.start(this, authToken)
+				val intent = Intent(this, ClientAddActivity::class.java)
+				startActivity(intent)
 				true
 			}
 			else -> super.onOptionsItemSelected(item)
@@ -64,18 +57,15 @@ class ClientListActivity : AppCompatActivity() {
 
 	public override fun onResume() {
 		super.onResume()
-		clientListUpdater.requestClientListUpdate()
+		clientListUpdater?.requestClientListUpdate()
 	}
 
 
-	companion object {
-		private const val ARG_AUTH_TOKEN = "ARG_AUTH_TOKEN"
-
-		fun start(context: Context, authToken: String) {
-			val intent = Intent(context, ClientListActivity::class.java)
-			intent.putExtra(ARG_AUTH_TOKEN, authToken)
-			context.startActivity(intent)
-		}
+	private fun reactToAuthToken(authToken: JsonWebToken) {
+		val repository = ClientRepositoryFactory.create(this, authToken)
+		clientListUpdater = ClientListUpdaterFactory.create(repository, this, client_list_list, swiperefresh, authToken)
+		swiperefresh.setOnRefreshListener { clientListUpdater?.requestClientListUpdate() }
+		clientListUpdater?.requestClientListUpdate()
 	}
 }
 

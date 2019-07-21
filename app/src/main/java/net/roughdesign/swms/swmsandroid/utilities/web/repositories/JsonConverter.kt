@@ -1,21 +1,21 @@
-package net.roughdesign.swms.swmsandroid.utilities.json
+package net.roughdesign.swms.swmsandroid.utilities.web.repositories
 
 import com.squareup.moshi.JsonAdapter
 
 
 class JsonConverter<T>(
 	private val modelAdapter: JsonAdapter<T>,
-	private val modelListAdapter: JsonAdapter<ArrayList<T>>
+	private val modelListAdapter: JsonAdapter<List<T>>
 ) {
 
-	fun encode(model: T?): ByteArray? {
+	fun serialize(model: T?): ByteArray? {
 		if (model == null) return null
 		val asJsonString = modelAdapter.toJson(model)
 		return asJsonString.toByteArray()
 	}
 
 
-	fun convert(byteArray: ByteArray?): T? {
+	fun deserialize(byteArray: ByteArray?): T? {
 		if (byteArray == null) return null
 
 		val asString = String(byteArray)
@@ -23,14 +23,14 @@ class JsonConverter<T>(
 	}
 
 
-	fun encodeList(model: ArrayList<T>?): ByteArray? {
+	fun serializeList(model: List<T>?): ByteArray? {
 		if (model == null) return null
 		val asJsonString = modelListAdapter.toJson(model)
 		return asJsonString.toByteArray()
 	}
 
 
-	fun convertList(byteArray: ByteArray?): ArrayList<T>? {
+	fun deserializeList(byteArray: ByteArray?): List<T>? {
 		if (byteArray == null) return null
 		val asString = String(byteArray)
 		return modelListAdapter.fromJson(asString)

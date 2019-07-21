@@ -1,7 +1,5 @@
 package net.roughdesign.swms.swmsandroid.clients.activities.add
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -12,7 +10,9 @@ import kotlinx.android.synthetic.main.client_add__content.*
 import net.roughdesign.swms.swmsandroid.R
 import net.roughdesign.swms.swmsandroid.clients.models.Client
 import net.roughdesign.swms.swmsandroid.clients.web.ClientRepositoryFactory
-import net.roughdesign.swms.swmsandroid.utilities.dependencyinjection.DI
+import net.roughdesign.swms.swmsandroid.users.authtokens.AuthTokenRequest
+import net.roughdesign.swms.swmsandroid.users.authtokens.JsonWebToken
+
 
 class ClientAddActivity : AppCompatActivity() {
 
@@ -25,12 +25,15 @@ class ClientAddActivity : AppCompatActivity() {
 		setContentView(R.layout.client_add__activity)
 		supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+		val authTokenRequest = AuthTokenRequest(this)
+		authTokenRequest.whenRequestFinished += { reactToAuthToken(it) }
+		authTokenRequest.start()
+	}
 
-		val clientRepositoryFactory = DI.resolve(ClientRepositoryFactory::class.java)
-		val authToken = intent.getStringExtra(ARG_AUTH_TOKEN)
-		val clientRepository = clientRepositoryFactory.create(this, authToken)
+
+	private fun reactToAuthToken(jsonWebToken: JsonWebToken) {
+		val clientRepository = ClientRepositoryFactory.create(this, jsonWebToken)
 		val view = findViewById<View>(R.id.activity_view)
-
 		clientAddPresenter = ClientAddPresenter(this, clientRepository, view)
 	}
 
@@ -58,17 +61,6 @@ class ClientAddActivity : AppCompatActivity() {
 		val name = client_name.text.toString()
 		val contactData = client_contact.text.toString()
 		return Client(null, name, contactData)
-	}
-
-
-	companion object {
-		const val ARG_AUTH_TOKEN = "ARG_AUTH_TOKEN"
-
-		fun start(context: Context, authToken: String) {
-			val intent = Intent(context, ClientAddActivity::class.java)
-			intent.putExtra(ARG_AUTH_TOKEN, authToken)
-			context.startActivity(intent)
-		}
 	}
 }
 
